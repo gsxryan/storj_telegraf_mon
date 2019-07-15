@@ -1,18 +1,21 @@
 #A StorJ node monitor script for telegraf using [inputs.exec]
+#Visualizing StorJ V3 node health with Grafana
+
 #Source: https://github.com/gsxryan/storj_telegraf_mon
-#By turbostorjdsk / KernelPanick
+#By turbostorjdsk (rocketchat) / KernelPanick (forum.storj.io)
 #Help from BrightSilence, Alexey, Kiwwiaq
+
 #https://gist.github.com/gsxryan/d23de042fce21e5a3d895005e1aeafa7
 #https://github.com/Kiwwiaq/storjv3logs/blob/master/storjlogs.sh
 #https://github.com/ReneSmeekes/storj_success_rate
 
-#Node Success Rates
+#Node Heath and Success Rates
 
 #Log line can be edited using cat for SNO's who wrote their log to a file.
 #using a rolling 24hr average, you may change to your desired rolling frequency
     #(less will vary more, longer will be more stable & tight)
 LOG="docker logs --since 24h storagenode"
-#LOG="cat /volume1/storj/v3/data/node.log"
+#LOG="awk -v d="$(date -d'24 hours ago' +'%FT%T')" '$1" "$2>=d' /mount1/storj/v3/data/node.log
 
 #count of unrecoverable failed audits
 audit_failed_crit=$($LOG 2>&1 | grep GET_AUDIT | grep failed | grep open -c)
@@ -55,9 +58,15 @@ put_repair_success=$($LOG 2>&1 | grep PUT_REPAIR | grep uploaded -c)
 put_repair_ratio=$(printf '%.3f\n' $(echo -e "$put_repair_success $put_repair_failed" | awk '{print ( $1 / ( $1 + $2 )) * 100 }'))
 
 #InfoDB Health Check, disk image is malformed
-infodb_check=#($LOG 2>&1 | grep "disk image is malformed" -c)
+infodb_check=$($LOG 2>&1 | grep "disk image is malformed" -c)
 #Kademlia or DNS Health Check
-kad_check=#($LOG 2>&1 | grep "Error requesting voucher" -c)
+kad_check=$($LOG 2>&1 | grep "Error requesting voucher" -c)
+
+#CSV format export
+#echo $(date +'%s'), $audit_ratio, $dl_ratio, $put_ratio, $put_accept_ratio, $get_repair_ratio, $put_repair_ratio, $concurrent_limit, $infodb_check, $kad_check >> successratio.log
 
 #InfluxDB format export
-echo $(date +'%s'), $audit_ratio, $dl_ratio, $put_ratio, $get_repair_ratio, $put_repair_ratio, $concurrent_limit >> SuccessRatio.log
+echo "StorJHealth,stat=audit FailedCrit=$audit_failed_crit,FailedWarn=$audit_failed_warn,Success=$audit_success,Ratio=$audit_ratio $(date +'%s%N')"
+#New
+#Repair
+#Health
