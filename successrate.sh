@@ -1,6 +1,10 @@
 #A StorJ node monitor script for telegraf using [inputs.exec]
+#Source: https://github.com/gsxryan/storj_telegraf_mon
 #By turbostorjdsk / KernelPanick
 #Help from BrightSilence, Alexey, Kiwwiaq
+#https://gist.github.com/gsxryan/d23de042fce21e5a3d895005e1aeafa7
+#https://github.com/Kiwwiaq/storjv3logs/blob/master/storjlogs.sh
+#https://github.com/ReneSmeekes/storj_success_rate
 
 #Node Success Rates
 
@@ -18,7 +22,6 @@ audit_failed_warn=$($LOG 2>&1 | grep GET_AUDIT | grep failed | grep -v open -c)
 audit_success=$($LOG 2>&1 | grep GET_AUDIT | grep downloaded -c)
 #Ratio of Successful to Failed Audits
 audit_ratio=$(printf '%.3f\n' $(echo -e "$audit_success $audit_failed_crit $audit_failed_warn" | awk '{print ( $1 / ( $1 + $2 + $3 )) * 100 }'))
-
 
 #Failed Downloads from your node
 dl_failed=$($LOG 2>&1 | grep '"GET"' | grep failed -c)
@@ -52,6 +55,9 @@ put_repair_success=$($LOG 2>&1 | grep PUT_REPAIR | grep uploaded -c)
 put_repair_ratio=$(printf '%.3f\n' $(echo -e "$put_repair_success $put_repair_failed" | awk '{print ( $1 / ( $1 + $2 )) * 100 }'))
 
 #InfoDB Health Check, disk image is malformed
-infodb_check=#($LOG 2>&1 | grep "disk images is malformed" -c)
+infodb_check=#($LOG 2>&1 | grep "disk image is malformed" -c)
+#Kademlia or DNS Health Check
+kad_check=#($LOG 2>&1 | grep "Error requesting voucher" -c)
 
+#InfluxDB format export
 echo $(date +'%s'), $audit_ratio, $dl_ratio, $put_ratio, $get_repair_ratio, $put_repair_ratio, $concurrent_limit >> SuccessRatio.log
