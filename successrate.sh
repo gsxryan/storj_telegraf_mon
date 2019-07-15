@@ -15,7 +15,7 @@
 #using a rolling 24hr average, you may change to your desired rolling frequency
     #(less will vary more, longer will be more stable & tight)
 LOG="docker logs --since 24h storagenode"
-#LOG="awk -v d="$(date -d'24 hours ago' +'%FT%T')" '$1" "$2>=d' /mount1/storj/v3/data/node.log
+#LOG="awk -v d="$(date -d'24 hours ago' +'%FT%T')" '$1" "$2>=d' /mount1/storj/v3/data/node.log"
 
 #count of unrecoverable failed audits
 audit_failed_crit=$($LOG 2>&1 | grep GET_AUDIT | grep failed | grep open -c)
@@ -68,5 +68,8 @@ kad_check=$($LOG 2>&1 | grep "Error requesting voucher" -c)
 #InfluxDB format export
 echo "StorJHealth,stat=audit FailedCrit=$audit_failed_crit,FailedWarn=$audit_failed_warn,Success=$audit_success,Ratio=$audit_ratio $(date +'%s%N')"
 #New
+echo "StorJHealth,stat=new DLFailed=$dl_failed,DLSuccess=$dl_success,DLRatio=$dl_ratio,PUTFailed=$put_failed,PUTSuccess=$put_success,PUTRatio=$put_ratio,PUTLimit=$concurrent_limit,PUTAcceptRatio=$put_accept_ratio $(date +'%s%N')"
 #Repair
+echo "StorJHealth,stat=repair GETRepairFail=$get_repair_failed,GETRepairSuccess=$get_repair_success,GETRepairRatio=$get_repair_ratio,PUTRepairFailed=$put_repair_failed,PUTRepairSuccess=$put_repair_success,PUTRepairRatio=$put_repair_ratio $(date +'%s%N')"
 #Health
+echo "StorJHealth,stat=health InfoDBcheck=$infodb_check,VoucherCheck=$kad_check $(date +'%s%N')"
