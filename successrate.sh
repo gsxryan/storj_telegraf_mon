@@ -38,7 +38,7 @@ put_failed=$($LOG 2>&1 | grep '"PUT"' | grep failed -c)
 #count of successful uploads to your node
 put_success=$($LOG 2>&1 | grep '"PUT"' | grep uploaded -c)
 #Ratio of Uploads
-put_ratio=$(printf '%.3f\n' $(echo -e "$put_success $put_failed" | awk '{print ( $1 / ( $1 + $2 )) * 100 }'))
+put_ratio=$(printf '%.3f\n' $(echo "$put_success $put_failed" | awk '{print ( $1 / ( $1 + $2 )) * 100 }'))
 #Uploads: count of concurrent connection max
 concurrent_limit=$($LOG 2>&1 | grep "upload rejected" -c)
 put_accept_ratio=$(printf '%.3f\n' $(echo "$put_success $concurrent_limit" | awk '{print ( $1 / ( $1 + $2 )) * 100 }'))
