@@ -1,2 +1,2 @@
 # storj_telegraf_mon
-Success Rates output with telegraf inputs.exec
+Success Rates output using StorJ logs with telegraf [inputs.exec] to InfluxDB format.
