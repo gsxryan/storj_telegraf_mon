@@ -62,11 +62,14 @@ infodb_check=$($LOG 2>&1 | grep "disk image is malformed" -c)
 #Kademlia or DNS Health Check
 kad_check=$($LOG 2>&1 | grep "Error requesting voucher" -c)
 
+#Collects Deleted Pieces
+deleted=$($LOG 2>&1 | grep "deleted" -c)
+
 #CSV format export
 #echo $(date +'%s'), $audit_ratio, $dl_ratio, $put_ratio, $put_accept_ratio, $get_repair_ratio, $put_repair_ratio, $concurrent_limit, $infodb_check, $kad_check >> successratio.log
 
 #InfluxDB format export
-echo "StorJHealth,stat=audit FailedCrit=$audit_failed_crit,FailedWarn=$audit_failed_warn,Success=$audit_success,Ratio=$audit_ratio $(date +'%s%N')"
+echo "StorJHealth,stat=audit FailedCrit=$audit_failed_crit,FailedWarn=$audit_failed_warn,Success=$audit_success,Ratio=$audit_ratio,Deleted=$deleted $(date +'%s%N')"
 #New
 echo "StorJHealth,stat=new DLFailed=$dl_failed,DLSuccess=$dl_success,DLRatio=$dl_ratio,PUTFailed=$put_failed,PUTSuccess=$put_success,PUTRatio=$put_ratio,PUTLimit=$concurrent_limit,PUTAcceptRatio=$put_accept_ratio $(date +'%s%N')"
 #Repair
