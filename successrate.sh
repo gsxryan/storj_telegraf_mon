@@ -1,3 +1,4 @@
+#!/bin/bash
 #A StorJ node monitor script for telegraf using [inputs.exec]
 #Visualizing StorJ V3 node health with Grafana
 
@@ -51,6 +52,7 @@ get_repair_success=$($LOG 2>&1 | grep GET_REPAIR | grep downloaded -c)
 #Ratio of GET_REPAIR
 get_repair_ratio=$(printf '%.3f\n' $(echo "$get_repair_success $get_repair_failed" | awk '{print ( $1 / ( $1 + $2 )) * 100 }'))
 
+
 #count of failed uploads repaired pieces
 put_repair_failed=$($LOG 2>&1 | grep PUT_REPAIR | grep failed -c)
 #count of successful uploads of repaired pieces
@@ -68,6 +70,26 @@ deleted=$($LOG 2>&1 | grep "deleted" -c)
 
 #Checks for Node Reboot
 reboots=$($LOG 2>&1 | grep "Public server started on" -c)
+
+#NaN(division by zero fix)  The node should start at 100% success if it divides by 0
+if [ "$audit_ratio" == "0.000" ]; then
+  audit_ratio="100"
+fi
+if [ "$dl_ratio" == "0.000" ]; then
+  dl_ratio="100"
+fi
+if [ "$put_ratio" == "0.000" ]; then
+  put_ratio="100"
+fi
+if [ "$put_accept_ratio" == "0.000" ]; then
+  put_ratio="100"
+fi
+if [ "$get_repair_ratio" == "0.000" ]; then
+  get_repair_ratio="100"
+fi
+if [ "$put_repair_ratio" == "0.000" ]; then
+  put_repair_ratio="100"
+fi
 
 #CSV format export
 #echo $(date +'%s'), $audit_ratio, $dl_ratio, $put_ratio, $put_accept_ratio, $get_repair_ratio, $put_repair_ratio, $concurrent_limit, $infodb_check, $kad_check >> successratio.log
