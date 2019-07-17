@@ -67,7 +67,7 @@ kad_check=$($LOG 2>&1 | grep "Error requesting voucher" -c)
 deleted=$($LOG 2>&1 | grep "deleted" -c)
 
 #Checks for Node Reboot
-reboots$($LOG 2>&1 | grep "Public server started on" -c)
+reboots=$($LOG 2>&1 | grep "Public server started on" -c)
 
 #CSV format export
 #echo $(date +'%s'), $audit_ratio, $dl_ratio, $put_ratio, $put_accept_ratio, $get_repair_ratio, $put_repair_ratio, $concurrent_limit, $infodb_check, $kad_check >> successratio.log
@@ -79,4 +79,4 @@ echo "StorJHealth,stat=new DLFailed=$dl_failed,DLSuccess=$dl_success,DLRatio=$dl
 #Repair
 echo "StorJHealth,stat=repair GETRepairFail=$get_repair_failed,GETRepairSuccess=$get_repair_success,GETRepairRatio=$get_repair_ratio,PUTRepairFailed=$put_repair_failed,PUTRepairSuccess=$put_repair_success,PUTRepairRatio=$put_repair_ratio $(date +'%s%N')"
 #Health
-echo "StorJHealth,stat=health InfoDBcheck=$infodb_check,VoucherCheck=$kad_check $(date +'%s%N')"
+echo "StorJHealth,stat=health InfoDBcheck=$infodb_check,VoucherCheck=$kad_check,Reboots=$reboots $(date +'%s%N')"
