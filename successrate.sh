@@ -3,8 +3,9 @@
 
 #Source: https://github.com/gsxryan/storj_telegraf_mon
 #By turbostorjdsk (rocketchat) / KernelPanick (forum.storj.io)
-#Help from BrightSilence, Alexey, Kiwwiaq
+#Help from BrightSilence, Alexey, Kiwwiaq, vedalken254, H3z (PRs)
 
+#https://forum.storj.io/t/error-codes-what-they-mean-and-severity-level-read-first/518
 #https://gist.github.com/gsxryan/d23de042fce21e5a3d895005e1aeafa7
 #https://github.com/Kiwwiaq/storjv3logs/blob/master/storjlogs.sh
 #https://github.com/ReneSmeekes/storj_success_rate
@@ -65,12 +66,15 @@ kad_check=$($LOG 2>&1 | grep "Error requesting voucher" -c)
 #Collects Deleted Pieces
 deleted=$($LOG 2>&1 | grep "deleted" -c)
 
+#Checks for Node Reboot
+reboots$($LOG 2>&1 | grep "Public server started on" -c)
+
 #CSV format export
 #echo $(date +'%s'), $audit_ratio, $dl_ratio, $put_ratio, $put_accept_ratio, $get_repair_ratio, $put_repair_ratio, $concurrent_limit, $infodb_check, $kad_check >> successratio.log
 
 #InfluxDB format export
 echo "StorJHealth,stat=audit FailedCrit=$audit_failed_crit,FailedWarn=$audit_failed_warn,Success=$audit_success,Ratio=$audit_ratio,Deleted=$deleted $(date +'%s%N')"
-#New
+#Newvedalken254
 echo "StorJHealth,stat=new DLFailed=$dl_failed,DLSuccess=$dl_success,DLRatio=$dl_ratio,PUTFailed=$put_failed,PUTSuccess=$put_success,PUTRatio=$put_ratio,PUTLimit=$concurrent_limit,PUTAcceptRatio=$put_accept_ratio $(date +'%s%N')"
 #Repair
 echo "StorJHealth,stat=repair GETRepairFail=$get_repair_failed,GETRepairSuccess=$get_repair_success,GETRepairRatio=$get_repair_ratio,PUTRepairFailed=$put_repair_failed,PUTRepairSuccess=$put_repair_success,PUTRepairRatio=$put_repair_ratio $(date +'%s%N')"
