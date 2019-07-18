@@ -16,8 +16,21 @@
 #Log line can be edited using cat for SNO's who wrote their log to a file.
 #using a rolling 24hr average, you may change to your desired rolling frequency
     #(less will vary more, longer will be more stable & tight)
-LOG="docker logs --since 24h storagenode"
+TIMEFRAME="24h"
+CONTAINER_NAME="storj"
+
+LOG=$(eval "docker logs --since $TIMEFRAME $CONTAINER_NAME 2>&1")
 #LOG="awk -v d="$(date -d'24 hours ago' +'%FT%T')" '$1" "$2>=d' /mount1/storj/v3/data/node.log"
+
+NO_SUCH_CONTAINER_ERROR="Error: No such container: $CONTAINER_NAME"
+if [[ $LOG == $NO_SUCH_CONTAINER_ERROR ]]; then
+  echo $LOG
+  exit 1
+fi
+
+
+#Get Node ID
+node_id=$(eval "docker logs $CONTAINER_NAME" 2>&1| head -n15 | grep Node | grep started | awk -F' ' '{print $4}')
 
 #count of unrecoverable failed audits
 audit_failed_crit=$($LOG 2>&1 | grep GET_AUDIT | grep failed | grep open -c)
@@ -94,10 +107,10 @@ reboots=$($LOG 2>&1 | grep "Public server started on" -c)
 #echo $(date +'%s'), $audit_ratio, $dl_ratio, $put_ratio, $put_accept_ratio, $get_repair_ratio, $put_repair_ratio, $concurrent_limit, $infodb_check, $kad_check >> successratio.log
 
 #InfluxDB format export
-echo "StorJHealth,stat=audit FailedCrit=$audit_failed_crit,FailedWarn=$audit_failed_warn,Success=$audit_success,Ratio=$audit_ratio,Deleted=$deleted $(date +'%s%N')"
+echo "StorJHealth,stat=audit NodeId=$node_id,FailedCrit=$audit_failed_crit,FailedWarn=$audit_failed_warn,Success=$audit_success,Ratio=$audit_ratio,Deleted=$deleted $(date +'%s%N')"
 #Newvedalken254
-echo "StorJHealth,stat=new DLFailed=$dl_failed,DLSuccess=$dl_success,DLRatio=$dl_ratio,PUTFailed=$put_failed,PUTSuccess=$put_success,PUTRatio=$put_ratio,PUTLimit=$concurrent_limit,PUTAcceptRatio=$put_accept_ratio $(date +'%s%N')"
+echo "StorJHealth,stat=new NodeId=$node_id,DLFailed=$dl_failed,DLSuccess=$dl_success,DLRatio=$dl_ratio,PUTFailed=$put_failed,PUTSuccess=$put_success,PUTRatio=$put_ratio,PUTLimit=$concurrent_limit,PUTAcceptRatio=$put_accept_ratio $(date +'%s%N')"
 #Repair
-echo "StorJHealth,stat=repair GETRepairFail=$get_repair_failed,GETRepairSuccess=$get_repair_success,GETRepairRatio=$get_repair_ratio,PUTRepairFailed=$put_repair_failed,PUTRepairSuccess=$put_repair_success,PUTRepairRatio=$put_repair_ratio $(date +'%s%N')"
+echo "StorJHealth,stat=repair NodeId=$node_id,GETRepairFail=$get_repair_failed,GETRepairSuccess=$get_repair_success,GETRepairRatio=$get_repair_ratio,PUTRepairFailed=$put_repair_failed,PUTRepairSuccess=$put_repair_success,PUTRepairRatio=$put_repair_ratio $(date +'%s%N')"
 #Health
-echo "StorJHealth,stat=health InfoDBcheck=$infodb_check,VoucherCheck=$kad_check,Reboots=$reboots $(date +'%s%N')"
+echo "StorJHealth,stat=health NodeId=$node_id,InfoDBcheck=$infodb_check,VoucherCheck=$kad_check,Reboots=$reboots $(date +'%s%N')"
