@@ -1,5 +1,11 @@
 {
   "__inputs": [
+	{
+      "name": "HOST",
+      "label": "Host",
+      "description": "Host machine, running the Storage Node",
+      "type": "constant"
+    },
     {
       "name": "DS_TELEGRAF",
       "label": "telegraf",
@@ -181,7 +187,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "fractal"
+              "value": "${HOST}"
             }
           ]
         }
@@ -620,7 +626,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "fractal"
+              "value": "${HOST}"
             }
           ]
         },
@@ -663,7 +669,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "fractal"
+              "value": "${HOST}"
             }
           ]
         },
@@ -706,7 +712,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "fractal"
+              "value": "${HOST}"
             }
           ]
         }
@@ -1152,7 +1158,7 @@
               "type": "fill"
             }
           ],
-          "hide": true,
+          "hide": false,
           "measurement": "StorJHealth",
           "orderByTime": "ASC",
           "policy": "default",
@@ -1648,7 +1654,7 @@
         "threshold": 0
       },
       "datasource": "${DS_STORJ}",
-      "description": "$$\n(uploads to client) - Downloads from this node ",
+      "description": "Downloads from this node - (uploads to client)",
       "fontSize": "100%",
       "format": "short",
       "gridPos": {
@@ -2459,7 +2465,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Storj Upload $$$$",
+          "alias": "Storj Upload",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -2511,7 +2517,7 @@
           ]
         },
         {
-          "alias": "Storj Download $",
+          "alias": "Storj Download",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -2564,7 +2570,7 @@
           ]
         },
         {
-          "alias": "Storj Download $",
+          "alias": "Storj Download",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -2748,7 +2754,7 @@
       "type": "bargauge"
     }
   ],
-  "refresh": false,
+  "refresh": "5m",
   "schemaVersion": 18,
   "style": "dark",
   "tags": [],
@@ -2787,5 +2793,5 @@
   "timezone": "",
   "title": "StorJ V3 Health",
   "uid": "A6a5iHkZz",
-  "version": 58
+  "version": 59
 }
