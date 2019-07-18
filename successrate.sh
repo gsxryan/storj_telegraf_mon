@@ -17,7 +17,7 @@
 #using a rolling 24hr average, you may change to your desired rolling frequency
     #(less will vary more, longer will be more stable & tight)
 TIMEFRAME="24h"
-CONTAINER_NAME="storj"
+CONTAINER_NAME="storagenode"
 
 LOG=$(eval "docker logs --since $TIMEFRAME $CONTAINER_NAME 2>&1")
 #LOG="awk -v d="$(date -d'24 hours ago' +'%FT%T')" '$1" "$2>=d' /mount1/storj/v3/data/node.log"
