@@ -31,7 +31,7 @@ docker logs --since 24h storagenode > ${LOG} 2>&1
 node_id=$(eval "docker logs $CONTAINER_NAME" 2>&1| head -n15 | grep Node | grep started | awk -F' ' '{print substr($4,0,7)}')
 #NO_SUCH_CONTAINER_ERROR="Error: No such container: $CONTAINER_NAME"
 #Cath if node ID collector fails (name Default)
-if [ -z "$node_id"]
+if [ -z "$node_id" ]
   then node_id="Default"
 fi
 
