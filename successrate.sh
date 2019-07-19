@@ -18,10 +18,10 @@
     #(less will vary more, longer will be more stable & tight)
     
 CONTAINER_NAME="storagenode"
-#TIMEFRAME="24h"
+TIMEFRAME="24h"
 
 LOG=$(mktemp)
-docker logs --since 24h storagenode > ${LOG} 2>&1
+docker logs --since $TIMEFRAME $CONTAINER_NAME > ${LOG} 2>&1
 
 #LOG=$(eval "docker logs --since $TIMEFRAME $CONTAINER_NAME" 2>&1) # Not working $LOG is merged in one line
 #LOG="awk -v d="$(date -d'24 hours ago' +'%FT%T')" '$1" "$2>=d' /mount1/storj/v3/data/node.log"
