@@ -43,7 +43,7 @@ if [[ $BALANCE_JSON == *"\"OK\""* ]]; then
     BALANCE_USD=$(echo -e "$BALANCE\t$STOR_PRICE_USD" | awk '{print $1 * $2}')
     BALANCE_EUR=$(echo -e "$BALANCE\t$STOR_PRICE_EUR" | awk '{print $1 * $2}')
   
-    echo "StorJToken,stat=tokens WalletAddress=\"$WALLET_ADDRESS\",BalanceSTORJ=$BALANCE,BalanceUSD=$BALANCE_USD,BalanceEUR=$BALANCE_EUR $(date +'%s%N')"
+    echo "StorJToken,stat=tokens,WalletAddress=\"$WALLET_ADDRESS\" BalanceSTORJ=$BALANCE,BalanceUSD=$BALANCE_USD,BalanceEUR=$BALANCE_EUR $(date +'%s%N')"
     echo "StorJToken,stat=prices STORJPriceUSD=$STOR_PRICE_USD,STORJPriceEUR=$STOR_PRICE_EUR $(date +'%s%N')"
   else
     echo "Error, Cryptocompare API returned: $STORJ_PRICE"
