@@ -34,7 +34,7 @@ fi
 
 #Get Node ID (NOTE: Head-n15 may prove to be unreliable for users that may archive early parts of the file,
 #since it's the fastest way, we'll leave it for now)
-node_id=$(eval "docker logs $CONTAINER_NAME" 2>&1| head -n15 | grep Node | grep started | awk -F' ' '{print $4}')
+node_id=$(eval "docker logs $CONTAINER_NAME" 2>&1| head -n15 | grep Node | grep started | awk -F' ' '{print substr($4,0,7)}')
 
 #count of unrecoverable failed audits
 audit_failed_crit=$(cat "$LOG" | grep GET_AUDIT | grep failed | grep open -c)
