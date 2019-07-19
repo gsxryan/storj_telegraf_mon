@@ -4,7 +4,7 @@
 
 #Source: https://github.com/gsxryan/storj_telegraf_mon
 #By turbostorjdsk (rocketchat) / KernelPanick (forum.storj.io)
-#Help from BrightSilence, Alexey, Kiwwiaq, vedalken254, H3z (PRs)
+#Help from BrightSilence, Alexey, Kiwwiaq, vedalken254, H3z (PRs), stefanbenten, robertstanfield
 
 #https://forum.storj.io/t/error-codes-what-they-mean-and-severity-level-read-first/518
 #https://gist.github.com/gsxryan/d23de042fce21e5a3d895005e1aeafa7
@@ -16,15 +16,17 @@
 #Log line can be edited using cat for SNO's who wrote their log to a file.
 #using a rolling 24hr average, you may change to your desired rolling frequency
     #(less will vary more, longer will be more stable & tight)
-LOG="docker logs --since 24h storagenode"
+LOG=$(mktemp)
+docker logs --since 24h storagenode > ${LOG} 2>&1
+
 #LOG="awk -v d="$(date -d'24 hours ago' +'%FT%T')" '$1" "$2>=d' /mount1/storj/v3/data/node.log"
 
 #count of unrecoverable failed audits
-audit_failed_crit=$($LOG 2>&1 | grep GET_AUDIT | grep failed | grep open -c)
+audit_failed_crit=$(cat "$LOG" | grep GET_AUDIT | grep failed | grep open -c)
 #count of recoverable failed audits`
-audit_failed_warn=$($LOG 2>&1 | grep GET_AUDIT | grep failed | grep -v open -c)
+audit_failed_warn=$(cat "$LOG" | grep GET_AUDIT | grep failed | grep -v open -c)
 #count of successful audits
-audit_success=$($LOG 2>&1 | grep GET_AUDIT | grep downloaded -c)
+audit_success=$(cat "$LOG" | grep GET_AUDIT | grep downloaded -c)
 #Ratio of Successful to Failed Audits
 if [ "$(echo "$audit_success $audit_failed_crit $audit_failed_warn" | awk '{print ( $1 + $2 + $3 )}')" == "0" ]
   then audit_ratio="100"
@@ -33,9 +35,9 @@ fi
 
 
 #Failed Downloads from your node
-dl_failed=$($LOG 2>&1 | grep '"GET"' | grep failed -c)
+dl_failed=$(cat "$LOG" | grep '"GET"' | grep failed -c)
 #count of successful downloads
-dl_success=$($LOG 2>&1 | grep '"GET"' | grep downloaded -c)
+dl_success=$(cat "$LOG" | grep '"GET"' | grep downloaded -c)
 #Ratio of Failed Downloads
 if [ "$(echo "$dl_failed $dl_success" | awk '{print ( $1 + $2 )}')" == "0" ]
   then dl_ratio="100"
@@ -43,9 +45,9 @@ if [ "$(echo "$dl_failed $dl_success" | awk '{print ( $1 + $2 )}')" == "0" ]
 fi
 
 #count of failed uploads to your node
-put_failed=$($LOG 2>&1 | grep '"PUT"' | grep failed -c)
+put_failed=$(cat "$LOG" | grep '"PUT"' | grep failed -c)
 #count of successful uploads to your node
-put_success=$($LOG 2>&1 | grep '"PUT"' | grep uploaded -c)
+put_success=$(cat "$LOG" | grep '"PUT"' | grep uploaded -c)
 #Ratio of Uploads
 if [ "$(echo "$put_failed $put_success" | awk '{print ( $1 + $2 )}')" == "0" ]
   then put_ratio="100"
@@ -53,16 +55,16 @@ if [ "$(echo "$put_failed $put_success" | awk '{print ( $1 + $2 )}')" == "0" ]
 fi
 
 #Uploads: count of concurrent connection max
-concurrent_limit=$($LOG 2>&1 | grep "upload rejected" -c)
+concurrent_limit=$(cat "$LOG" | grep "upload rejected" -c)
 if [ "$(echo "$concurrent_limit $put_success" | awk '{print ( $1 + $2 )}')" == "0" ]
   then put_accept_ratio="100"
   else put_accept_ratio=$(printf '%.3f\n' $(echo "$put_success $concurrent_limit" | awk '{print ( $1 / ( $1 + $2 )) * 100 }'))
 fi
 
 #count of failed downloads of pieces for repair process
-get_repair_failed=$($LOG 2>&1 | grep GET_REPAIR | grep failed -c)
+get_repair_failed=$(cat "$LOG" | grep GET_REPAIR | grep failed -c)
 #count of successful downloads of pieces for repair process
-get_repair_success=$($LOG 2>&1 | grep GET_REPAIR | grep downloaded -c)
+get_repair_success=$(cat "$LOG" | grep GET_REPAIR | grep downloaded -c)
 #Ratio of GET_REPAIR
 if [ "$(echo "$get_repair_success $get_repair_failed" | awk '{print ( $1 + $2 )}')" == "0" ]
   then get_repair_ratio="100"
@@ -70,9 +72,9 @@ if [ "$(echo "$get_repair_success $get_repair_failed" | awk '{print ( $1 + $2 )}
 fi
 
 #count of failed uploads repaired pieces
-put_repair_failed=$($LOG 2>&1 | grep PUT_REPAIR | grep failed -c)
+put_repair_failed=$(cat "$LOG" | grep PUT_REPAIR | grep failed -c)
 #count of successful uploads of repaired pieces
-put_repair_success=$($LOG 2>&1 | grep PUT_REPAIR | grep uploaded -c)
+put_repair_success=$(cat "$LOG" | grep PUT_REPAIR | grep uploaded -c)
 #Ratio of PUT_REPAIR
 if [ "$(echo "$put_repair_success $put_repair_failed" | awk '{print ( $1 + $2 )}')" == "0" ]
   then put_repair_ratio="100"
@@ -80,15 +82,15 @@ if [ "$(echo "$put_repair_success $put_repair_failed" | awk '{print ( $1 + $2 )}
 fi
 
 #InfoDB Health Check, disk image is malformed
-infodb_check=$($LOG 2>&1 | grep "disk image is malformed" -c)
+infodb_check=$(cat "$LOG" | grep "disk image is malformed" -c)
 #Kademlia or DNS Health Check
-kad_check=$($LOG 2>&1 | grep "Error requesting voucher" -c)
+kad_check=$(cat "$LOG" | grep "Error requesting voucher" -c)
 
 #Collects Deleted Pieces
-deleted=$($LOG 2>&1 | grep "deleted" -c)
+deleted=$(cat "$LOG" | grep "deleted" -c)
 
 #Checks for Node Reboot
-reboots=$($LOG 2>&1 | grep "Public server started on" -c)
+reboots=$(cat "$LOG" | grep "Public server started on" -c)
 
 #CSV format export
 #echo $(date +'%s'), $audit_ratio, $dl_ratio, $put_ratio, $put_accept_ratio, $get_repair_ratio, $put_repair_ratio, $concurrent_limit, $infodb_check, $kad_check >> successratio.log
