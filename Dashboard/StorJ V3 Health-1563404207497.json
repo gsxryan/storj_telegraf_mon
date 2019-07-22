@@ -1,17 +1,15 @@
 {
   "__inputs": [
-    {
-      "name": "DS_TELEGRAF",
-      "label": "telegraf",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "influxdb",
-      "pluginName": "InfluxDB"
+	{
+      "name": "HOST",
+      "label": "Host",
+      "description": "Host machine, running the Storage Node",
+      "type": "constant"
     },
     {
       "name": "DS_STORJ",
       "label": "StorJ",
-      "description": "",
+      "description": "InfluxDB feeded by Telegraf.",
       "type": "datasource",
       "pluginId": "influxdb",
       "pluginName": "InfluxDB"
@@ -90,7 +88,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "${DS_TELEGRAF}",
+      "datasource": "${DS_STORJ}",
       "decimals": 1,
       "format": "s",
       "gauge": {
@@ -181,7 +179,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "fractal"
+              "value": "${HOST}"
             }
           ]
         }
@@ -546,7 +544,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_TELEGRAF}",
+      "datasource": "${DS_STORJ}",
       "decimals": 2,
       "fill": 1,
       "gridPos": {
@@ -620,7 +618,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "fractal"
+              "value": "${HOST}"
             }
           ]
         },
@@ -663,7 +661,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "fractal"
+              "value": "${HOST}"
             }
           ]
         },
@@ -706,7 +704,7 @@
             {
               "key": "host",
               "operator": "=",
-              "value": "fractal"
+              "value": "${HOST}"
             }
           ]
         }
@@ -2463,13 +2461,13 @@
         ]
       },
       "aliasColors": {
-        "Storj Download $": "rgb(37, 117, 161)",
-        "Storj Upload $$$$": "dark-green"
+        "Storj Download": "rgb(37, 117, 161)",
+        "Storj Upload": "dark-green"
       },
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_TELEGRAF}",
+      "datasource": "${DS_STORJ}",
       "editable": true,
       "error": false,
       "fill": 1,
@@ -2506,13 +2504,13 @@
       "scopedVars": {
         "host": {
           "selected": true,
-          "text": "fractal",
-          "value": "fractal"
+          "text": "${HOST}",
+          "value": "${HOST}"
         }
       },
       "seriesOverrides": [
         {
-          "alias": "/Sent*/",
+          "alias": "Storj Download (PUT)",
           "transform": "negative-Y"
         }
       ],
@@ -2617,7 +2615,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "interface",
+              "operator": "=",
+              "value": "docker0"
+            }
+          ]
         },
         {
           "alias": "Storj Download",
@@ -2679,7 +2683,8 @@
           "fill": true,
           "line": true,
           "op": "lt",
-          "value": 1000000
+          "value": 1000000,
+          "yaxis": "left"						 
         }
       ],
       "timeFrom": null,
@@ -2725,7 +2730,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${DS_TELEGRAF}",
+      "datasource": "${DS_STORJ}",
       "gridPos": {
         "h": 2,
         "w": 3,
@@ -3888,5 +3893,5 @@
   "timezone": "",
   "title": "StorJ V3 Health",
   "uid": "A6a5iHkZx",
-  "version": 5
+  "version": 6
 }
