@@ -47,8 +47,7 @@ if [ "$(echo "$audit_success $audit_failed_crit $audit_failed_warn" | awk '{prin
   else audit_ratio=$(printf '%.3f\n' $(echo "$audit_success $audit_failed_crit $audit_failed_warn" | awk '{print ( $1 / ( $1 + $2 + $3 )) * 100 }'))
 fi
 
-
-#Failed Downloads from your node
+#GET: Failed Downloads from your node
 dl_failed=$(cat "$LOG" | grep '"GET"' | grep failed -c)
 #count of successful downloads
 dl_success=$(cat "$LOG" | grep '"GET"' | grep downloaded -c)
@@ -57,8 +56,10 @@ if [ "$(echo "$dl_failed $dl_success" | awk '{print ( $1 + $2 )}')" == "0" ]
   then dl_ratio="100"
   else dl_ratio=$(printf '%.3f\n' $(echo "$dl_success $dl_failed" | awk '{print ( $1 / ( $1 + $2 )) * 100 }'))
 fi
+#count of started downloads (dl_started=audit_success+audit_failed_all+dl_success+dl_failed)
+dl_started=$(cat "$LOG" | grep "download started" -c)
 
-#count of failed uploads to your node
+#PUT: count of failed uploads to your node
 put_failed=$(cat "$LOG" | grep '"PUT"' | grep failed -c)
 #count of successful uploads to your node
 put_success=$(cat "$LOG" | grep '"PUT"' | grep uploaded -c)
@@ -67,6 +68,8 @@ if [ "$(echo "$put_failed $put_success" | awk '{print ( $1 + $2 )}')" == "0" ]
   then put_ratio="100"
   else put_ratio=$(printf '%.3f\n' $(echo "$put_success $put_failed" | awk '{print ( $1 / ( $1 + $2 )) * 100 }'))
 fi
+#count of started uploads (put_started=put_failed+put_success)
+put_started=$(cat "$LOG" | grep "upload started" -c)
 
 #Uploads: count of concurrent connection max
 concurrent_limit=$(cat "$LOG" | grep "upload rejected" -c)
@@ -112,7 +115,7 @@ reboots=$(cat "$LOG" | grep "Public server started on" -c)
 #InfluxDB format export
 echo "StorJHealth,NodeId=$node_id FailedCrit=$audit_failed_crit,FailedWarn=$audit_failed_warn,Success=$audit_success,Ratio=$audit_ratio,Deleted=$deleted $(date +'%s%N')"
 #Newvedalken254
-echo "StorJHealth,NodeId=$node_id DLFailed=$dl_failed,DLSuccess=$dl_success,DLRatio=$dl_ratio,PUTFailed=$put_failed,PUTSuccess=$put_success,PUTRatio=$put_ratio,PUTLimit=$concurrent_limit,PUTAcceptRatio=$put_accept_ratio $(date +'%s%N')"
+echo "StorJHealth,NodeId=$node_id DLFailed=$dl_failed,DLSuccess=$dl_success,DLRatio=$dl_ratio,PUTFailed=$put_failed,PUTSuccess=$put_success,PUTRatio=$put_ratio,PUTLimit=$concurrent_limit,PUTAcceptRatio=$put_accept_ratio,DLStarted=$dl_started,PUTStarted=$put_started $(date +'%s%N')"
 #Repair
 echo "StorJHealth,NodeId=$node_id GETRepairFail=$get_repair_failed,GETRepairSuccess=$get_repair_success,GETRepairRatio=$get_repair_ratio,PUTRepairFailed=$put_repair_failed,PUTRepairSuccess=$put_repair_success,PUTRepairRatio=$put_repair_ratio $(date +'%s%N')"
 #Health
