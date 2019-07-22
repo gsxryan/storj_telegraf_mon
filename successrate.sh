@@ -57,7 +57,7 @@ if [ "$(echo "$dl_failed $dl_success" | awk '{print ( $1 + $2 )}')" == "0" ]
   else dl_ratio=$(printf '%.3f\n' $(echo "$dl_success $dl_failed" | awk '{print ( $1 / ( $1 + $2 )) * 100 }'))
 fi
 #count of started downloads (dl_started=audit_success+audit_failed_all+dl_success+dl_failed)
-dl_started=$(cat "$LOG" | grep '"download started"' -c)
+dl_started=$(cat "$LOG" | grep "download started" -c)
 
 #PUT: count of failed uploads to your node
 put_failed=$(cat "$LOG" | grep '"PUT"' | grep failed -c)
@@ -69,7 +69,7 @@ if [ "$(echo "$put_failed $put_success" | awk '{print ( $1 + $2 )}')" == "0" ]
   else put_ratio=$(printf '%.3f\n' $(echo "$put_success $put_failed" | awk '{print ( $1 / ( $1 + $2 )) * 100 }'))
 fi
 #count of started uploads (put_started=put_failed+put_success)
-put_started=$(cat "$LOG" | grep '"upload started"' -c)
+put_started=$(cat "$LOG" | grep "upload started" -c)
 
 #Uploads: count of concurrent connection max
 concurrent_limit=$(cat "$LOG" | grep "upload rejected" -c)
