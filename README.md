@@ -1,6 +1,8 @@
 # storj_telegraf_mon
 Success Rates output using StorJ logs with telegraf [inputs.exec] to InfluxDB format.
 
+<img src="https://raw.githubusercontent.com/gsxryan/storj_telegraf_mon/master/Dashboard/Preview.png"/>
+
 ## Installation
 Add/Append this block to your telegraf.conf
   
