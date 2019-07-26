@@ -77,6 +77,30 @@ Edit `tokens.sh` with your wallet address and your Etherscan API token.
 
 Don't forget to `chmod +x successrate.sh tokens.sh folder_size.sh`
 
+## If your Telegraf instance runs within a container
+It must be allowed to use `docker` CLI on host machine.
+Please add thos arguments when running your Telegraf container:
+```
+$PWD=your current path
+$PWD_STORJ=your storj data folder path
+
+docker run -d \
+    --name telegraf \
+    --restart=unless-stopped \
+    --net=host \
+    -v "$PWD/telegraf.conf:/etc/telegraf/telegraf.conf" \
+    -v "$PWD/scripts:/scripts" \
+    -v "$PWD_STORJ:$PWD_STORJ:ro" \
+    -e HOST_PROC=/host/proc \
+    -v /proc:/host/proc:ro \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /usr/bin/docker:/usr/bin/docker \
+    --security-opt seccomp=unconfined \
+    --security-opt apparmor=unconfined \
+    telegraf
+```
+
+
 ## Test your configuration
 In order to see if your configuration is OK you can check the `inputs.exe` are working fine:
 - Enter container by running bash: `docker exec -i -t telegraf /bin/bash`
