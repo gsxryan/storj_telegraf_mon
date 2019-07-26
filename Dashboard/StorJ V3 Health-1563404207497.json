@@ -1,11 +1,5 @@
 {
   "__inputs": [
-	{
-      "name": "HOST",
-      "label": "Host",
-      "description": "Host machine, running the Storage Node",
-      "type": "constant"
-    },
     {
       "name": "DS_STORJ",
       "label": "StorJ",
@@ -32,13 +26,13 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "6.2.2"
+      "version": "6.2.5"
     },
     {
       "type": "panel",
       "id": "grafana-piechart-panel",
       "name": "Pie Chart",
-      "version": "1.3.6"
+      "version": "1.3.8"
     },
     {
       "type": "panel",
@@ -76,6 +70,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
+  "iteration": 1564124482235,
   "links": [],
   "panels": [
     {
@@ -178,8 +173,8 @@
           "tags": [
             {
               "key": "host",
-              "operator": "=",
-              "value": "${HOST}"
+              "operator": "=~",
+              "value": "/^$HOST$/"
             }
           ]
         }
@@ -276,7 +271,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -359,7 +360,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -406,7 +413,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.2.2",
+      "pluginVersion": "6.2.5",
       "targets": [
         {
           "groupBy": [
@@ -442,7 +449,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -489,7 +502,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.2.2",
+      "pluginVersion": "6.2.5",
       "targets": [
         {
           "groupBy": [
@@ -530,6 +543,12 @@
               "key": "device",
               "operator": "=",
               "value": "sda1"
+            },
+            {
+              "condition": "AND",
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
             }
           ]
         }
@@ -617,8 +636,8 @@
           "tags": [
             {
               "key": "host",
-              "operator": "=",
-              "value": "${HOST}"
+              "operator": "=~",
+              "value": "/^$HOST$/"
             }
           ]
         },
@@ -660,8 +679,8 @@
           "tags": [
             {
               "key": "host",
-              "operator": "=",
-              "value": "${HOST}"
+              "operator": "=~",
+              "value": "/^$HOST$/"
             }
           ]
         },
@@ -703,8 +722,8 @@
           "tags": [
             {
               "key": "host",
-              "operator": "=",
-              "value": "${HOST}"
+              "operator": "=~",
+              "value": "/^$HOST$/"
             }
           ]
         }
@@ -828,7 +847,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -911,7 +936,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -994,7 +1025,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -1090,7 +1127,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         },
         {
           "alias": "GET Success",
@@ -1132,7 +1175,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         },
         {
           "alias": "PUT Accepted",
@@ -1174,7 +1223,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         },
         {
           "alias": "Audit Success",
@@ -1216,7 +1271,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         },
         {
           "alias": "GET Repair Success",
@@ -1258,7 +1319,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         },
         {
           "alias": "PUT Repair Success",
@@ -1300,7 +1367,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -1420,7 +1493,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         },
         {
           "alias": "PUT Failed",
@@ -1461,7 +1540,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         },
         {
           "alias": "GET Failed",
@@ -1502,7 +1587,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         },
         {
           "alias": "GET Repair Failed",
@@ -1543,7 +1634,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         },
         {
           "alias": "PUT Repair Failed",
@@ -1584,7 +1681,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -1707,7 +1810,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         },
         {
           "alias": "DL Success",
@@ -1829,7 +1938,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         },
         {
           "alias": "PUT Success",
@@ -1992,7 +2107,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         },
         {
           "alias": "Audit Warn",
@@ -2148,7 +2269,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         },
         {
           "alias": "GETRepair Success",
@@ -2185,7 +2312,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -2268,7 +2401,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         },
         {
           "alias": "PUTRepair Success",
@@ -2305,7 +2444,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -2389,7 +2534,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -2398,68 +2549,6 @@
       "type": "bargauge"
     },
     {
-      "alert": {
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                1000000
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          },
-          {
-            "evaluator": {
-              "params": [
-                1000000
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "B",
-                "5m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "keep_state",
-        "for": "5m",
-        "frequency": "5m",
-        "handler": 1,
-        "message": "StorJ V3 Container is below 1Mbps.  May be a good time for maintenance.",
-        "name": "Throughput of $host Docker0 alert",
-        "noDataState": "keep_state",
-        "notifications": [
-          {
-            "uid": "000000002"
-          }
-        ]
-      },
       "aliasColors": {
         "Storj Download": "rgb(37, 117, 161)",
         "Storj Upload": "dark-green"
@@ -2487,12 +2576,12 @@
         "max": true,
         "min": false,
         "rightSide": true,
-        "show": true,
+        "show": false,
         "total": false,
         "values": true
       },
       "lines": true,
-      "linewidth": 2,
+      "linewidth": 1,
       "links": [],
       "maxPerRow": 4,
       "nullPointMode": "connected",
@@ -2552,7 +2641,7 @@
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "mean"
               },
               {
                 "params": [
@@ -2567,6 +2656,12 @@
               "key": "interface",
               "operator": "=",
               "value": "docker0"
+            },
+            {
+              "condition": "AND",
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
             }
           ]
         },
@@ -2605,7 +2700,7 @@
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "mean"
               },
               {
                 "params": [
@@ -2620,59 +2715,12 @@
               "key": "interface",
               "operator": "=",
               "value": "docker0"
-            }
-          ]
-        },
-        {
-          "alias": "Storj Download",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10m"
-              ],
-              "type": "time"
             },
             {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "measurement": "net",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"used_percent\") FROM \"disk\" WHERE \"host\" = $host AND \"path\" =~ $path AND $timeFilter GROUP BY time($interval) fill(null)",
-          "rawQuery": false,
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "bytes_sent"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "median"
-              },
-              {
-                "params": [
-                  "10s"
-                ],
-                "type": "non_negative_derivative"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "interface",
-              "operator": "=",
-              "value": "docker0"
+              "condition": "AND",
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
             }
           ]
         }
@@ -2684,7 +2732,7 @@
           "line": true,
           "op": "lt",
           "value": 1000000,
-          "yaxis": "left"						 
+          "yaxis": "left"
         }
       ],
       "timeFrom": null,
@@ -2808,7 +2856,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -3100,14 +3154,17 @@
         "y": 15
       },
       "id": 43,
+      "interval": "",
       "legend": {
+        "alignAsTable": false,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
-        "show": false,
+        "rightSide": false,
+        "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
@@ -3129,7 +3186,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "",
+          "alias": "$tag_host",
           "groupBy": [
             {
               "params": [
@@ -3140,6 +3197,12 @@
             {
               "params": [
                 "path"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "host"
               ],
               "type": "tag"
             },
@@ -3350,508 +3413,509 @@
         "y": 23
       },
       "id": 45,
-      "panels": [
-        {
-          "alert": {
-            "conditions": [
-              {
-                "evaluator": {
-                  "params": [
-                    1.9
-                  ],
-                  "type": "gt"
-                },
-                "operator": {
-                  "type": "and"
-                },
-                "query": {
-                  "params": [
-                    "A",
-                    "5m",
-                    "now"
-                  ]
-                },
-                "reducer": {
-                  "params": [],
-                  "type": "max"
-                },
-                "type": "query"
-              }
-            ],
-            "executionErrorState": "keep_state",
-            "for": "5m",
-            "frequency": "5m",
-            "handler": 1,
-            "message": "StorJ Node has rebooted more than once in 24 hours!",
-            "name": "Reboot Alert",
-            "noDataState": "keep_state",
-            "notifications": [
-              {
-                "uid": "000000002"
-              }
-            ]
-          },
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_STORJ}",
-          "description": "Alerts if reboots >1 in $timeframe",
-          "fill": 1,
-          "gridPos": {
-            "h": 2,
-            "w": 4,
-            "x": 0,
-            "y": 24
-          },
-          "id": 47,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {},
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "Reboots",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "StorJHealth",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "Reboots"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "last"
-                  },
-                  {
-                    "params": [],
-                    "type": "difference"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [
-            {
-              "colorMode": "critical",
-              "fill": true,
-              "line": true,
-              "op": "gt",
-              "value": 1.9,
-              "yaxis": "left"
-            }
-          ],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Reboot Alert",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "alert": {
-            "conditions": [
-              {
-                "evaluator": {
-                  "params": [
-                    0.9
-                  ],
-                  "type": "gt"
-                },
-                "operator": {
-                  "type": "and"
-                },
-                "query": {
-                  "params": [
-                    "A",
-                    "10m",
-                    "now"
-                  ]
-                },
-                "reducer": {
-                  "params": [],
-                  "type": "max"
-                },
-                "type": "query"
-              }
-            ],
-            "executionErrorState": "keep_state",
-            "for": "5m",
-            "frequency": "10m",
-            "handler": 1,
-            "message": "StorJ node has critical audit message.  Please verify mount points, fstab, etc.\ndocker logs storagenode 2>&1 | grep GET_AUDIT | grep failed | grep open",
-            "name": "Audit Critical alert",
-            "noDataState": "keep_state",
-            "notifications": [
-              {
-                "uid": "000000002"
-              }
-            ]
-          },
-          "aliasColors": {},
-          "bars": false,
-          "cacheTimeout": null,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_STORJ}",
-          "fill": 1,
-          "gridPos": {
-            "h": 2,
-            "w": 4,
-            "x": 4,
-            "y": 24
-          },
-          "id": 48,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {},
-          "percentage": false,
-          "pluginVersion": "6.2.2",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "StorJHealth",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "FailedCrit"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "max"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [
-            {
-              "colorMode": "critical",
-              "fill": true,
-              "line": true,
-              "op": "gt",
-              "value": 0.9
-            }
-          ],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Audit Crit",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "alert": {
-            "conditions": [
-              {
-                "evaluator": {
-                  "params": [
-                    0.9
-                  ],
-                  "type": "gt"
-                },
-                "operator": {
-                  "type": "and"
-                },
-                "query": {
-                  "params": [
-                    "A",
-                    "30m",
-                    "now"
-                  ]
-                },
-                "reducer": {
-                  "params": [],
-                  "type": "max"
-                },
-                "type": "query"
-              }
-            ],
-            "executionErrorState": "keep_state",
-            "for": "5m",
-            "frequency": "5m",
-            "handler": 1,
-            "message": "InfoDB Critical Warning.  Check InfoDB Health.\n\ndocker logs storagenode 2>&1 | grep \"disk image is malformed\"\nhttps://storjlabs.atlassian.net/wiki/spaces/SCKB/pages/104235043/How+to+fix+a+database+disk+image+is+malformed",
-            "name": "InfoDB check alert",
-            "noDataState": "keep_state",
-            "notifications": [
-              {
-                "uid": "000000002"
-              }
-            ]
-          },
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_STORJ}",
-          "fill": 1,
-          "gridPos": {
-            "h": 2,
-            "w": 4,
-            "x": 8,
-            "y": 24
-          },
-          "id": 49,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "options": {},
-          "percentage": false,
-          "pluginVersion": "6.2.2",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "measurement": "StorJHealth",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "InfoDBcheck"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "max"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [
-            {
-              "colorMode": "critical",
-              "fill": true,
-              "line": true,
-              "op": "gt",
-              "value": 0.9
-            }
-          ],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "InfoDB check",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
+      "panels": [],
       "title": "Alerts",
       "type": "row"
+    },
+    {
+      "alert": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                1.9
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "max"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "5m",
+        "handler": 1,
+        "message": "StorJ Node has rebooted more than once in 24 hours!",
+        "name": "Reboot Alert",
+        "noDataState": "keep_state",
+        "notifications": [
+          {
+            "uid": "000000002"
+          },
+          {
+            "uid": "000000001"
+          }
+        ]
+      },
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_STORJ}",
+      "description": "Alerts if reboots >1 in $timeframe",
+      "fill": 1,
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 0,
+        "y": 24
+      },
+      "id": 47,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {},
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Reboots",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "StorJHealth",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "Reboots"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": [],
+                "type": "difference"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 1.9
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Reboot Alert",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "alert": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                0.9
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "10m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "max"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "10m",
+        "handler": 1,
+        "message": "StorJ node has critical audit message.  Please verify mount points, fstab, etc.\ndocker logs storagenode 2>&1 | grep GET_AUDIT | grep failed | grep open",
+        "name": "Audit Critical alert",
+        "noDataState": "keep_state",
+        "notifications": [
+          {
+            "uid": "000000002"
+          }
+        ]
+      },
+      "aliasColors": {},
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_STORJ}",
+      "fill": 1,
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 4,
+        "y": 24
+      },
+      "id": 48,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {},
+      "percentage": false,
+      "pluginVersion": "6.2.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "StorJHealth",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "FailedCrit"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "max"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 0.9
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Audit Crit",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "alert": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                0.9
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "30m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "max"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "5m",
+        "handler": 1,
+        "message": "InfoDB Critical Warning.  Check InfoDB Health.\n\ndocker logs storagenode 2>&1 | grep \"disk image is malformed\"\nhttps://storjlabs.atlassian.net/wiki/spaces/SCKB/pages/104235043/How+to+fix+a+database+disk+image+is+malformed",
+        "name": "InfoDB check alert",
+        "noDataState": "keep_state",
+        "notifications": [
+          {
+            "uid": "000000002"
+          }
+        ]
+      },
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_STORJ}",
+      "fill": 1,
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 8,
+        "y": 24
+      },
+      "id": 49,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {},
+      "percentage": false,
+      "pluginVersion": "6.2.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "StorJHealth",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "InfoDBcheck"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "max"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 0.9
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "InfoDB check",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
   "refresh": "5m",
@@ -3859,7 +3923,30 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_STORJ}",
+        "definition": "SHOW TAG VALUES FROM \"StorJHealth\" WITH KEY = \"host\"",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Host",
+        "multi": false,
+        "name": "HOST",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM \"StorJHealth\" WITH KEY = \"host\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
     "from": "now-24h",
@@ -3893,5 +3980,5 @@
   "timezone": "",
   "title": "StorJ V3 Health",
   "uid": "A6a5iHkZx",
-  "version": 6
+  "version": 7
 }
