@@ -67,6 +67,7 @@ Add/Append this block to your telegraf.conf
   ```
   [[inputs.net]]
   ## NIC Traffic Monitor
+  interfaces = ["docker0"]
   ```
 
 In order to track your wallet balance, please create an Eterscan account and API token.
