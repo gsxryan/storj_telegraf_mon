@@ -2738,7 +2738,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Throughput of $host Docker0",
+      "title": "Throughput of docker0 interface",
       "tooltip": {
         "msResolution": true,
         "shared": true,
