@@ -1,6 +1,8 @@
 # storj_telegraf_mon
 Success Rates output using StorJ logs with telegraf [inputs.exec] to InfluxDB format.
 
+<img src="https://raw.githubusercontent.com/gsxryan/storj_telegraf_mon/master/Dashboard/Preview.png"/>
+
 ## Installation
 Add/Append this block to your telegraf.conf
   
@@ -67,9 +69,43 @@ Add/Append this block to your telegraf.conf
   ```
   [[inputs.net]]
   ## NIC Traffic Monitor
+  interfaces = ["docker0"]
   ```
 
 In order to track your wallet balance, please create an Eterscan account and API token.
 Edit `tokens.sh` with your wallet address and your Etherscan API token.
 
 Don't forget to `chmod +x successrate.sh tokens.sh folder_size.sh`
+
+## If your Telegraf instance runs within a container
+It must be allowed to use `docker` CLI on host machine.
+Please add thos arguments when running your Telegraf container:
+```
+$PWD=your current path
+$PWD_STORJ=your storj data folder path
+
+docker run -d \
+    --name telegraf \
+    --restart=unless-stopped \
+    --net=host \
+    -v "$PWD/telegraf.conf:/etc/telegraf/telegraf.conf" \
+    -v "$PWD/scripts:/scripts" \
+    -v "$PWD_STORJ:$PWD_STORJ:ro" \
+    -e HOST_PROC=/host/proc \
+    -v /proc:/host/proc:ro \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /usr/bin/docker:/usr/bin/docker \
+    --security-opt seccomp=unconfined \
+    --security-opt apparmor=unconfined \
+    telegraf
+```
+
+
+## Test your configuration
+In order to see if your configuration is OK you can check the `inputs.exe` are working fine:
+- Enter container by running bash: `docker exec -i -t telegraf /bin/bash`
+- Test input plugins: `telegraf --debug --config /etc/telegraf/telegraf.conf --input-filter exec --test`
+
+Measurements should output, without warning/error.
+Check that metrics are not equal to zero. `DLSuccess` should have a greater than zero value in the following example line:
+`StorJHealth,NodeId=123Ngj DLFailed=63,DLSuccess=3257,DLRatio=98.102,PUTFailed=396,PUTSuccess=42998,PUTRatio=99.087,PUTLimit=6501,PUTAcceptRatio=86.866 1564131850213571763`
