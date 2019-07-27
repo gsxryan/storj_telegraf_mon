@@ -28,7 +28,7 @@ Add/Append this block to your telegraf.conf
    data_format = "influx"
 ```
 
-- Host Items (default InfluxDB 'telegraf')
+- Host Items
 ```
 # Read metrics about cpu usage
 [[inputs.cpu]]
