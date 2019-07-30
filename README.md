@@ -3,6 +3,12 @@ Success Rates output using StorJ logs with telegraf [inputs.exec] to InfluxDB fo
 
 <img src="https://raw.githubusercontent.com/gsxryan/storj_telegraf_mon/master/Dashboard/Preview.png"/>
 
+## Prerequisites
+
+Allow telegraf service to access docker for logs (if you are not polling the logfile)
+
+`sudo usermod -aG docker telegraf`
+
 ## Installation
 Add/Append this block to your telegraf.conf
   
