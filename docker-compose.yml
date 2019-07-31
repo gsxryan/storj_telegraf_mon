@@ -10,8 +10,17 @@ grafana:
   container_name: grafana
   ports:
     - "3000:3000"
-  env_file:
-    - 'env.grafana'
+  environment:
+    GF_SECURITY_ADMIN_USER: admin
+    GF_SECURITY_ADMIN_PASSWORD: admin
+    GF_SECURITY_SECRET_KEY: grafana
+    GF_USERS_ALLOW_SIGN_UP: "true"
+    GF_USERS_ALLOW_ORG_CREATE: "true"
+    GF_AUTH_ANONYMOUS_ENABLED: "true"
+    GF_AUTH_ANONYMOUS_ORG_NAME: grafana
+    GF_DASHBOARDS_JSON_ENABLED: "true"
+    GF_DASHBOARDS_JSON_PATH: /opt/grafana
+    GRAFANA_PLUGINS_ENABLED: "true"
   links:
     - influxdb
   volumes:
@@ -29,8 +38,10 @@ influxdb:
     - "8083:8083"
     - "8086:8086"
     - "8090:8090"
-  env_file:
-    - 'env.influxdb'
+  environment:
+    INFLUX_DATABASE: "StorJ"
+#    INLFUX_ADMIN_USER: ""
+#    INFLUX_ADMIN_PASS: ""
   volumes:
     # Data persistency
     # sudo mkdir -p /srv/docker/influxdb/data
@@ -44,6 +55,11 @@ telegraf:
   container_name: telegraf
   links:
     - influxdb
+  environment:
+    HOST_NAME: "telegraf"
+    INFLUXDB_HOST: "influxdb"
+    INFLUXDB_PORT: "8086"
+    DATABASE: "StorJ"
   volumes:
     # Source:container
     - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
@@ -51,3 +67,5 @@ telegraf:
     - ./folder_size.sh:/etc/telegraf/folder_size.sh:ro
     - ./tokens.sh:/etc/telegraf/tokens.sh:ro
     - /mnt/iscsi/StorjV3:/mnt/storjshare:ro
+    - /var/run/docker.sock:/var/run/docker.sock
+  privileged: true
