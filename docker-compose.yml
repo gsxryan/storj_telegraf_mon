@@ -1,0 +1,53 @@
+# Storj Monitor Docker YAML
+# gsxryan github
+# Fork from: https://github.com/nicolargo/docker-influxdb-grafana/blob/master/docker-compose.yml
+# This is in development and does not work fully yet.
+
+# Grafana
+# Visualizes Data
+grafana:
+  image: grafana/grafana:latest
+  container_name: grafana
+  ports:
+    - "3000:3000"
+  env_file:
+    - 'env.grafana'
+  links:
+    - influxdb
+  volumes:
+    # Data persistency
+    # sudo mkdir -p /srv/docker/grafana/data; chown 472:472 /srv/docker/grafana/data
+    # Source:Container
+    - /srv/docker/grafana/data:/var/lib/grafana
+
+# InfluxDB
+# Stores Data
+influxdb:
+  image: influxdb:latest
+  container_name: influxdb
+  ports:
+    - "8083:8083"
+    - "8086:8086"
+    - "8090:8090"
+  env_file:
+    - 'env.influxdb'
+  volumes:
+    # Data persistency
+    # sudo mkdir -p /srv/docker/influxdb/data
+    # Source:container
+    - /srv/docker/influxdb/data:/var/lib/influxdb
+
+# Telegraf
+# Gathers data
+telegraf:
+  image: telegraf:latest
+  container_name: telegraf
+  links:
+    - influxdb
+  volumes:
+    # Source:container
+    - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    - ./successrate.sh:/etc/telegraf/successrate.sh:ro
+    - ./folder_size.sh:/etc/telegraf/folder_size.sh:ro
+    - ./tokens.sh:/etc/telegraf/tokens.sh:ro
+    - /mnt/iscsi/StorjV3:/mnt/storjshare:ro
