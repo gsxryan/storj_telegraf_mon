@@ -115,3 +115,18 @@ In order to see if your configuration is OK you can check the `inputs.exe` are w
 Measurements should output, without warning/error.
 Check that metrics are not equal to zero. `DLSuccess` should have a greater than zero value in the following example line:
 `StorJHealth,NodeId=123Ngj DLFailed=63,DLSuccess=3257,DLRatio=98.102,PUTFailed=396,PUTSuccess=42998,PUTRatio=99.087,PUTLimit=6501,PUTAcceptRatio=86.866 1564131850213571763`
+
+## Alternative configuration notes
+- Telegraf on windows with HyperV NIC:
+```
+[[inputs.win_perf_counters]]
+  [[inputs.win_perf_counters.object]]
+    ObjectName = "Hyper-V Virtual Network Adapter"
+    Counters = [
+      "Bytes Received/sec",
+      "Bytes Sent/sec",
+      "Read Bytes/sec"
+    ]
+    Instances = ["*"]
+    Measurement = "Hyper-V_Virtual_Network_Adapter"
+```
