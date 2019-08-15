@@ -109,6 +109,10 @@ deleted=$(cat "$LOG" | grep "deleted" -c)
 #Checks for Node Reboot
 reboots=$(cat "$LOG" | grep "Public server started on" -c)
 
+#Checks latest node version reported
+version=$(cat "$LOG" | egrep -o "v[[:digit:]]{1,3}\.[[:digit:]]{1,3}\.[[:digit:]]{1,3}" | tail -1 | egr
+ep -o "[[:digit:]]{1,3}\.[[:digit:]]{1,3}\.[[:digit:]]{1,3}")
+
 #CSV format export
 #echo $(date +'%s'), $audit_ratio, $dl_ratio, $put_ratio, $put_accept_ratio, $get_repair_ratio, $put_repair_ratio, $concurrent_limit, $infodb_check, $kad_check >> successratio.log
 
@@ -119,7 +123,7 @@ echo "StorJHealth,NodeId=$node_id DLFailed=$dl_failed,DLSuccess=$dl_success,DLRa
 #Repair
 echo "StorJHealth,NodeId=$node_id GETRepairFail=$get_repair_failed,GETRepairSuccess=$get_repair_success,GETRepairRatio=$get_repair_ratio,PUTRepairFailed=$put_repair_failed,PUTRepairSuccess=$put_repair_success,PUTRepairRatio=$put_repair_ratio $(date +'%s%N')"
 #Health
-echo "StorJHealth,NodeId=$node_id InfoDBcheck=$infodb_check,VoucherCheck=$kad_check,Reboots=$reboots $(date +'%s%N')"
+echo "StorJHealth,NodeId=$node_id InfoDBcheck=$infodb_check,VoucherCheck=$kad_check,Reboots=$reboots,Version=$version $(date +'%s%N')"
 
 #Clean /tmp LOG created with $(mktemp)
 rm $LOG
