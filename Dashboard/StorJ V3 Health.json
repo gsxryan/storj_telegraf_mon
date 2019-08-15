@@ -70,7 +70,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1564258383395,
+  "iteration": 1565697444884,
   "links": [],
   "panels": [
     {
@@ -2772,7 +2772,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Storj Upload (GET)",
+          "alias": "NIC Upload (GET)",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -2830,7 +2830,7 @@
           ]
         },
         {
-          "alias": "Storj Download (PUT)",
+          "alias": "NIC Download (PUT)",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -3144,6 +3144,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": "${DS_STORJ}",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -3205,6 +3206,7 @@
               "type": "fill"
             }
           ],
+          "hide": true,
           "measurement": "StorJToken",
           "orderByTime": "ASC",
           "policy": "default",
@@ -3309,15 +3311,13 @@
     {
       "cacheTimeout": null,
       "colorBackground": false,
-      "colorPostfix": false,
-      "colorPrefix": true,
       "colorValue": false,
       "colors": [
         "#299c46",
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "decimals": 3,
+      "datasource": "${DS_STORJ}",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -3327,13 +3327,12 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 4,
-        "w": 3,
+        "h": 2,
+        "w": 5,
         "x": 9,
         "y": 15
       },
-      "hideTimeOverride": true,
-      "id": 37,
+      "id": 67,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -3352,9 +3351,9 @@
       "nullText": null,
       "options": {},
       "postfix": "",
-      "postfixFontSize": "30%",
-      "prefix": "STORJ",
-      "prefixFontSize": "30%",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
       "rangeMaps": [
         {
           "from": "null",
@@ -3368,13 +3367,25 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "WalletAddress",
+      "tableColumn": "",
       "targets": [
         {
           "alias": "",
-          "groupBy": [],
-          "hide": false,
-          "measurement": "StorJToken",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "StorJHealth",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -3383,7 +3394,7 @@
             [
               {
                 "params": [
-                  "BalanceSTORJ"
+                  "Version"
                 ],
                 "type": "field"
               },
@@ -3393,12 +3404,19 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$HOST$/"
+            }
+          ]
         }
       ],
       "thresholds": "",
-      "timeFrom": "3d",
-      "title": "Wallet",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Node Version",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -3418,8 +3436,8 @@
       "fill": 1,
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 12,
+        "w": 10,
+        "x": 14,
         "y": 15
       },
       "id": 43,
@@ -3548,13 +3566,15 @@
     {
       "cacheTimeout": null,
       "colorBackground": false,
+      "colorPostfix": false,
       "colorPrefix": true,
       "colorValue": false,
       "colors": [
         "#299c46",
-        "rgba(237, 129, 40, 0.89)",
+        "#5794F2",
         "#d44a3a"
       ],
+      "datasource": "${DS_STORJ}",
       "decimals": 2,
       "format": "none",
       "gauge": {
@@ -3565,10 +3585,114 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 4,
-        "w": 3,
+        "h": 3,
+        "w": 5,
         "x": 9,
-        "y": 19
+        "y": 17
+      },
+      "hideTimeOverride": true,
+      "id": 37,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "30%",
+      "prefix": "STORJ",
+      "prefixFontSize": "30%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "WalletAddress",
+      "targets": [
+        {
+          "alias": "",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "StorJToken",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "BalanceSTORJ"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": "3d",
+      "title": "Wallet",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorPrefix": true,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "${DS_STORJ}",
+      "decimals": 2,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 9,
+        "y": 20
       },
       "hideTimeOverride": true,
       "id": 41,
@@ -5339,5 +5463,5 @@
   "timezone": "",
   "title": "StorJ V3 Health",
   "uid": "A6a5iHkZx",
-  "version": 7
+  "version": 12
 }
