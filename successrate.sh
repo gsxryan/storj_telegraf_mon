@@ -122,7 +122,7 @@ echo "StorJHealth,NodeId=$node_id DLFailed=$dl_failed,DLSuccess=$dl_success,DLRa
 #Repair
 echo "StorJHealth,NodeId=$node_id GETRepairFail=$get_repair_failed,GETRepairSuccess=$get_repair_success,GETRepairRatio=$get_repair_ratio,PUTRepairFailed=$put_repair_failed,PUTRepairSuccess=$put_repair_success,PUTRepairRatio=$put_repair_ratio $(date +'%s%N')"
 #Health
-echo "StorJHealth,NodeId=$node_id InfoDBcheck=$infodb_check,VoucherCheck=$kad_check,Reboots=$reboots,Version=$version $(date +'%s%N')"
+echo "StorJHealth,NodeId=$node_id InfoDBcheck=$infodb_check,VoucherCheck=$kad_check,Reboots=$reboots,Version=\"$version\" $(date +'%s%N')"
 
 #Clean /tmp LOG created with $(mktemp)
 rm $LOG
