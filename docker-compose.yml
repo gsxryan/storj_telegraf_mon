@@ -1,0 +1,83 @@
+# Storj Monitor Docker YAML
+# gsxryan github
+# Fork from: https://github.com/nicolargo/docker-influxdb-grafana/blob/master/docker-compose.yml
+# Fork from: https://github.com/matisku/tig-stack/blob/master/docker-compose-noplugins.yml
+# This is in development and does not work fully yet.
+
+# Grafana
+# Visualizes Data
+grafana:
+  image: grafana/grafana:latest
+  container_name: grafana
+  ports:
+    - "3000:3000"
+  environment:
+    GF_SECURITY_ADMIN_USER: admin
+    GF_SECURITY_ADMIN_PASSWORD: admin
+    GF_SECURITY_SECRET_KEY: grafana
+    GF_USERS_ALLOW_SIGN_UP: "true"
+    GF_USERS_ALLOW_ORG_CREATE: "true"
+    GF_AUTH_ANONYMOUS_ENABLED: "true"
+    GF_AUTH_ANONYMOUS_ORG_NAME: grafana
+    GF_DASHBOARDS_JSON_ENABLED: "true"
+    GF_DASHBOARDS_JSON_PATH: /opt/grafana
+    GRAFANA_PLUGINS_ENABLED: "true"
+  links:
+    - influxdb
+  volumes:
+    # Data persistency
+    # sudo mkdir -p /srv/docker/grafana/data; chown 472:472 /srv/docker/grafana/data
+    # Source:Container
+    - /srv/docker/grafana/data:/var/lib/grafana
+
+# InfluxDB
+# Stores Data
+influxdb:
+  image: influxdb:latest
+  container_name: influxdb
+  ports:
+    - "8083:8083"
+    - "8086:8086"
+    - "8090:8090"
+  environment:
+    INFLUX_DATABASE: "StorJ"
+#    INLFUX_ADMIN_USER: ""
+#    INFLUX_ADMIN_PASS: ""
+  volumes:
+    # Data persistency
+    # sudo mkdir -p /srv/docker/influxdb/data
+    # Source:container
+    - /srv/docker/influxdb/data:/var/lib/influxdb
+
+# Telegraf
+# Gathers data
+telegraf:
+  image: telegraf:latest
+  container_name: telegraf
+  links:
+    - influxdb
+#  security_opt:
+#    - seccomp:unconfined
+#    - apparmor:unconfined
+  environment:
+    HOST_NAME: "telegraf"
+    INFLUXDB_HOST: "influxdb"
+    INFLUXDB_PORT: "8086"
+    DATABASE: "StorJ"
+    HOST_PROC: "/host/proc"
+  volumes:
+    # Source:container
+    #Import Scripts
+    - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    - ./successrate.sh:/etc/telegraf/successrate.sh:ro
+    - ./folder_size.sh:/etc/telegraf/folder_size.sh:ro
+    - ./tokens.sh:/etc/telegraf/tokens.sh:ro
+    #Import Storj Shared Dir
+    - /mnt/iscsi/StorjV3:/mnt/storjshare:ro
+    #Import host docker
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    - /usr/bin/docker:/usr/bin/docker:ro
+    #Import Host proc
+    - /proc:/host/proc:ro
+    #/sys:/host/sys:ro
+  privileged: true
