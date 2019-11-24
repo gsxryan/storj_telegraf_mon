@@ -12,6 +12,9 @@ ETHERSCAN_API_KEY="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
 # Or override variables with tokens.sh.secrets file (not commited)
 if [ -f tokens.sh.secrets ]; then
+  # The content of tokens.sh.secrets shuold be similar to:
+  # WALLET_ADDRESS="0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+  # ETHERSCAN_API_KEY="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
  source tokens.sh.secrets
 fi
 
