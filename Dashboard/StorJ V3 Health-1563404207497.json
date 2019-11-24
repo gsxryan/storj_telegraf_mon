@@ -1,11 +1,5 @@
 {
   "__inputs": [
-	{
-      "name": "HOST",
-      "label": "Host",
-      "description": "Host machine, running the Storage Node",
-      "type": "constant"
-    },
     {
       "name": "DS_STORJ",
       "label": "StorJ",
