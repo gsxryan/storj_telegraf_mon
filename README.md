@@ -1,5 +1,6 @@
 # storj_telegraf_mon
 Success Rates output using StorJ logs with telegraf [inputs.exec] to InfluxDB format.
+Dashboard values extracted from Storage Node API.
 
 <img src="https://raw.githubusercontent.com/gsxryan/storj_telegraf_mon/master/Dashboard/Preview.png"/>
 
@@ -10,6 +11,9 @@ Allow telegraf service to access docker for logs (if you are not polling the log
 `sudo usermod -aG docker telegraf`
 
 ## Installation
+Open your Storage Node API by adding this:
+``-p 14002:14002`` to your run command of your Storage Node.
+
 Add/Append this block to your telegraf.conf
   
 - StorJ Node Items (default InfluxDB 'StorJ')
@@ -27,11 +31,16 @@ Add/Append this block to your telegraf.conf
    interval = "1h" # if you don't care to track STORJ price, you can increase it to 24h
    data_format = "influx"
 
- [[inputs.exec]]
-   commands = ["/path/to/scripts/folder_size.sh /path/to/storagenode/data/folder"]
-   timeout = "60s"
-   interval = "30m"
-   data_format = "influx"
+  [[inputs.exec]]
+     commands = [
+          "curl -s 127.0.0.1:14002/api/dashboard", # Open SNO API by mapping ports when running your SNO docker instance
+          "curl -s 127.0.0.1:14003/api/dashboard" # If multiple nodes, map ports accordingly
+          ]
+     timeout = "60s"
+     interval = "1m"
+     data_format = "json"
+     tag_keys = [ "data_nodeID" ]
+     name_override = "StorJHealth"
 ```
 
 - Host Items
@@ -81,7 +90,7 @@ Add/Append this block to your telegraf.conf
 In order to track your wallet balance, please create an Eterscan account and API token.
 Edit `tokens.sh` with your wallet address and your Etherscan API token.
 
-Don't forget to `chmod +x successrate.sh tokens.sh folder_size.sh`
+Don't forget to `chmod +x successrate.sh tokens.sh`
 
 ## If your Telegraf instance runs within a container
 It must be allowed to use `docker` CLI on host machine.
