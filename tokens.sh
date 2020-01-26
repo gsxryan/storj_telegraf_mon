@@ -30,7 +30,7 @@ if [[ $BALANCE_JSON == *"\"OK\""* ]]; then
   #  - get the value 
   #  - remove quotes
   #  - translate from satoshi to float token
-  BALANCE=$(echo $BALANCE_JSON | grep -Po '"result":.*?[^\\]"' | awk -F':' '{print $2}' | sed -e 's/^"//' -e 's/"$//' | awk '{print ($1 / 100000000)}')
+  BALANCE=$(echo $BALANCE_JSON | grep -oP '(?<="result":")\d+'|awk '{print ($1 / 100000000)}')
   
   # Fetch current STORJ price. Expected output simiar to:
   #  {"USD":0.1605,"EUR":0.1433}
@@ -38,8 +38,8 @@ if [[ $BALANCE_JSON == *"\"OK\""* ]]; then
 
   # API answer should contain "USD"
   if [[ $STORJ_PRICE == *"\"USD\""* ]]; then
-    STOR_PRICE_USD=$(echo $STORJ_PRICE | grep -Po '"USD":.*?[^\\],' | awk -F':' '{print $2}' | sed -e 's/,$//')	
-    STOR_PRICE_EUR=$(echo $STORJ_PRICE | grep -Po '"EUR":.*?[^\\]}' | awk -F':' '{print $2}' | sed -e 's/}$//')
+    STOR_PRICE_USD=$(echo $STORJ_PRICE | grep -oP '(?<="USD":)[0-9.]+')	
+    STOR_PRICE_EUR=$(echo $STORJ_PRICE | grep -oP '(?<="EUR":)[0-9.]+')
     BALANCE_USD=$(echo -e "$BALANCE\t$STOR_PRICE_USD" | awk '{print $1 * $2}')
     BALANCE_EUR=$(echo -e "$BALANCE\t$STOR_PRICE_EUR" | awk '{print $1 * $2}')
   
