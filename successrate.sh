@@ -73,7 +73,7 @@ put_started=$(grep -c 'upload started' $LOG)
 
 #Uploads: count of concurrent connection max
 concurrent_limit=$(grep -c 'upload rejected' $LOG)
-if [ "$(expr $concurrent_limit $put_success)" == "0" ]
+if [ "$(expr $concurrent_limit + $put_success)" == "0" ]
   then put_accept_ratio="100"
   else put_accept_ratio=$(awk 'BEGIN{printf "%0.3f\n",( "'$put_success'" / ( "'$put_success'" + "'$put_concurrent_limit'" )) * 100 }')
 fi
@@ -83,7 +83,7 @@ get_repair_failed=$(grep -c 'failed.*GET_REPAIR' $LOG)
 #count of successful downloads of pieces for repair process
 get_repair_success=$(grep -c 'downloaded.*GET_REPAIR' $LOG)
 #Ratio of GET_REPAIR
-if [ "$(expr $get_repair_success $get_repair_failed)" == "0" ]
+if [ "$(expr $get_repair_success + $get_repair_failed)" == "0" ]
   then get_repair_ratio="100"
   else get_repair_ratio=$(awk 'BEGIN{printf "%0.3f\n",( "'$get_repair_success'" / ( "'$get_repair_success'" + "'$get_repair_failed'" )) * 100 }')
 fi
@@ -93,7 +93,7 @@ put_repair_failed=$(grep -c 'failed.*PUT_REPAIR' $LOG)
 #count of successful uploads of repaired pieces
 put_repair_success=$(grep -c 'uploaded.*PUT_REPAIR' $LOG)
 #Ratio of PUT_REPAIR
-if [ "$(expr $put_repair_success $put_repair_failed)" == "0" ]
+if [ "$(expr $put_repair_success + $put_repair_failed)" == "0" ]
   then put_repair_ratio="100"
   else put_repair_ratio=$(awk 'BEGIN{printf "%0.3f\n",( "'$put_repair_success'" / ( "'$put_repair_success'" + "'$put_repair_failed'" )) * 100 }')
 fi
