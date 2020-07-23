@@ -3161,7 +3161,7 @@
             },
             {
               "params": [
-                "data_nodeID"
+                "nodeID"
               ],
               "type": "tag"
             },
@@ -3181,7 +3181,7 @@
             [
               {
                 "params": [
-                  "data_diskSpace_used"
+                  "diskSpace_used"
                 ],
                 "type": "field"
               },
@@ -3210,7 +3210,7 @@
             },
             {
               "params": [
-                "data_nodeID"
+                "nodeID"
               ],
               "type": "tag"
             },
@@ -3230,7 +3230,7 @@
             [
               {
                 "params": [
-                  "data_diskSpace_available"
+                  "diskSpace_available"
                 ],
                 "type": "field"
               },
@@ -3350,7 +3350,7 @@
             },
             {
               "params": [
-                "data_nodeID"
+                "nodeID"
               ],
               "type": "tag"
             },
@@ -3370,7 +3370,7 @@
             [
               {
                 "params": [
-                  "data_bandwidth_used"
+                  "bandwidth_used"
                 ],
                 "type": "field"
               },
@@ -3399,7 +3399,7 @@
             },
             {
               "params": [
-                "data_nodeID"
+                "nodeID"
               ],
               "type": "tag"
             },
@@ -3420,7 +3420,7 @@
             [
               {
                 "params": [
-                  "data_bandwidth_available"
+                  "bandwidth_available"
                 ],
                 "type": "field"
               },
