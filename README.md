@@ -33,8 +33,8 @@ Add/Append this block to your telegraf.conf
 
   [[inputs.exec]]
      commands = [
-          "curl -s 127.0.0.1:14002/api/sno", # Open SNO API by mapping ports when running your SNO docker instance
-          "curl -s 127.0.0.1:14003/api/sno" # If multiple nodes, map ports accordingly
+          "curl -s 127.0.0.1:14002/api/sno/", # Open SNO API by mapping ports when running your SNO docker instance
+          "curl -s 127.0.0.1:14003/api/sno/" # If multiple nodes, map ports accordingly
           ]
      timeout = "60s"
      interval = "1m"
